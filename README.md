@@ -20,9 +20,9 @@ The general flow is as follows:
 1. Compile each file like this:
     1. `go build -o http-server http-server/server.go`
     1. `go build -o http-client http-client/client.go`
-    1. `go build -o grpc-server http-server/server.go`
+    1. `go build -o grpc-server grpc-server/server.go`
     1. `go build -o grpc-client grpc-client/client.go`
     
 ## Execution Instructions
-1. For a particular communication type, first run the server using the command (for HTTP for example): `./http-server.exe --certificate [path to certificate] --key [path to private key]`
+1. For a particular communication type, first run the server using the command (for HTTP for example): `./http-server --certificate [path to certificate] --key [path to private key]`
 1. Run the corresponding client using the command (for HTTP for example): `./http-client --num-requests [number of requests per iteration] --num-iterations [number of iterations]`
