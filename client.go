@@ -8,7 +8,7 @@ import (
 	"strconv"
 	"time"
 
-	pb "03-grpc-json-comparison-go/user"
+	pb "grpc-json-comparison-go/user"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
