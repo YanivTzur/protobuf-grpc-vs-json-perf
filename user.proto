@@ -1,0 +1,15 @@
+syntax="proto3";
+
+service UserManager {
+    rpc addUser(User) returns(Empty) {}
+}
+
+message User {
+    uint32 age = 1;
+    string firstName = 2;
+    string lastName = 3;
+}
+
+message Empty {
+    
+}
