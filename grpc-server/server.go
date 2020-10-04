@@ -6,7 +6,7 @@ import (
 	"net"
 	"os"
 
-	pb "grpc-json-comparison-go/user"
+	pb "protobuf-grpc-json-perf-comparison/user"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"

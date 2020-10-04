@@ -18,7 +18,7 @@ import (
 
 const (
 	port  = 8000
-	usage = "Usage: ./client --num-requests [number of requests] --num-iterations [number of iterations]"
+	usage = "Usage: ./client --num-requests [number of requests] --num-iterations [number of iterations] --tls-certificate [TLS certificate's path]"
 )
 
 type user struct {
@@ -47,7 +47,17 @@ func getNumIterations() (uint64, error) {
 	return strconv.ParseUint(arg, 10, 32)
 }
 
-func parseClientArgs() (uint64, uint64, error) {
+func getTLSCertificate() (string, error) {
+	if os.Args[1] == "--tls-certificate" {
+		return os.Args[2], nil
+	}
+	if os.Args[3] == "--tls-certificate" {
+		return os.Args[4], nil
+	}
+	return os.Args[6], nil
+}
+
+func parseClientArgs() (uint64, uint64, string, error) {
 	if len(os.Args) < 5 {
 		log.Fatalln(usage)
 	}
@@ -57,24 +67,28 @@ func parseClientArgs() (uint64, uint64, error) {
 	}
 	numRequests, err := getNumRequests()
 	if err != nil {
-		return 0, 0, fmt.Errorf("Failed to parse number of requests: %v", err)
+		return 0, 0, "", fmt.Errorf("Failed to parse number of requests: %v", err)
 	}
 	numIterations, err := getNumIterations()
 	if err != nil {
-		return 0, 0, fmt.Errorf("Failed to parse number of iterations: %v", err)
+		return 0, 0, "", fmt.Errorf("Failed to parse number of iterations: %v", err)
+	}
+	tlsCertificate, err := getTLSCertificate()
+	if err != nil {
+		return 0, 0, "", fmt.Errorf("Failed to parse TLS certificate's path")
 	}
 
-	return numRequests, numIterations, nil
+	return numRequests, numIterations, tlsCertificate, nil
 }
 
 func main() {
-	numRequests, numIterations, err := parseClientArgs()
+	numRequests, numIterations, tlsCertificate, err := parseClientArgs()
 	if err != nil {
 		log.Fatalln("Failed to parse command line arguments:", err)
 	}
 
 	client := &http.Client{}
-	caCert, err := ioutil.ReadFile("server.cert")
+	caCert, err := ioutil.ReadFile(tlsCertificate)
 	if err != nil {
 		log.Fatalf("Reading server certificate: %s", err)
 	}
