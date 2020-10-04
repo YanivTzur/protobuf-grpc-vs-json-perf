@@ -17,6 +17,7 @@ The general flow is as follows:
 
 ## Installation Instructions
 1. Create a TLS certificate and key pair. There are instructions on how to do that online. 
+1. At the root of the repository, run: `go install`
 1. Compile each file like this:
     1. `go build -o http-server http-server/server.go`
     1. `go build -o http-client http-client/client.go`
@@ -25,4 +26,4 @@ The general flow is as follows:
     
 ## Execution Instructions
 1. For a particular communication type, first run the server using the command (for HTTP for example): `./http-server --certificate [path to certificate] --key [path to private key]`
-1. Run the corresponding client using the command (for HTTP for example): `./http-client --num-requests [number of requests per iteration] --num-iterations [number of iterations]`
+1. Run the corresponding client using the command (for HTTP for example): `./http-client --num-requests [number of requests per iteration] --num-iterations [number of iterations] --tls-certificate [TLS certificate's path]`
